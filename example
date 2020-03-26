@@ -1,3 +1,4 @@
+--数据库的定义与删除
 --数据库的定义
 --例3.1 定义一个SQL数据库
 CREATE DATABASE SaleProduct
@@ -5,6 +6,7 @@ CREATE DATABASE SaleProduct
 --数据库的删除
 --例3.2 删除SQL数据库SaleProduct
 DROP DATABASE SaleProduct
+
 
 --基本表的定义、删除与修改
 --基本表的定义
@@ -53,7 +55,6 @@ orderAmount numeric(10,2) NOT NULL)
 NO ACTION:说明禁止删除或更新被参照记录，这也是默认的处理方式。
 SET NULL:说明将参照记录的对应属性列值设置为空值NULL。
 SET DEFAULT:说明将参照记录的对应属性列值设置为默认值。*/
-
 
 --例3.5 外码约束还可以定义成表级约束
 CREATE TABLE Orders(
@@ -105,28 +106,23 @@ DROP CONSTRAINT DF_custCity
 --例3.12 删除OrderDetail表
 DROP TABLE OrderDetail
 
-
 --例3.13 在Customer表的属性列custPhone上创建一个唯一索引
 CREATE UNIQUE INDEX idx_uq_custPhone
 on Customer(custPhone)
 
-
 --例3.14 删除Customert表的索引idx_uq_custPhone
 DROP INDEX idx_uq_custPhone ON Customer
-
 
 --例3.15 向客户表中插入一个客户记录('907','林巍','北京','17705678942')
 INSERT INTO Customer
 VALUES ('907','林巍','北京','17705678942')
 --说明:列名序列省略，则表示在VALUES后的元组值中提供插入元组的每个分量的值，分量的顺序和关系模式中列名的顺序一致。
 
-
 --例3.16 向客户表中插入一个客户记录('905','王力','大连','15903541236').
 INSERT INTO Customer
 VALUES ('905','王力','大连','15903541236')
 --运行结果:操作失败
 --分析原因:违反了PRIMARY KEY约束
-
 
 --例3.17 向客户表中插入一个客户记录,客户编号为“904”,客户名称为“张松林”
 INSERT INTO Customer(custID,custName)
@@ -144,7 +140,6 @@ VALUES ('904','张松林')
 DELETE FROM Customer
 WHERE custName= '张小宁'
 
-
 --例3.20 删除Product中商品编号为“11206” 的商品信息
 DELETE FROM Product
 WHERE pdID='11206'
@@ -160,14 +155,12 @@ WHERE custName='里奇'
 UPDATE Product
 SET pdPrice=pdPrice*1.1
 
-
 --例3.23 将客户表中客户编号为“902”的客户编号改为“910”
 UPDATE Customer
 SET custID='910'
 WHERE custID='902'
 --运行结果: Customer中客户 编号为“902” 的客户编号成功改为“910”。
 --同时订单表Orders中所有引用“902”的元组的custID也同时更新为“910”。
-
 
 --例3.24 将订单表中订单编号为“D201007010916005”的订单编号改为“D201007010916009”。
 UPDATE Orders
