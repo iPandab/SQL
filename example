@@ -2,19 +2,25 @@
 --例3.1 定义一个SQL数据库
 CREATE DATABASE SaleProduct
 
-
+--数据库的删除
 --例3.2 删除SQL数据库SaleProduct
 DROP DATABASE SaleProduct
 
-
 --基本表的定义、删除与修改
+--基本表的定义
 --例3.3 创建客户表Customer
 CREATE TABLE Customer(
 custID varchar(5) PRIMARY KEY,
 custName varchar(20) NOT NULL UNIQUE,
 custCity varchar(10),
 custPhone varchar(13))
-
+/*常用完整性约束
+NULL INOT NULL:该列值可以为空，或者不能为空。
+UNIQUE:唯一性约束，说明该列取值必须唯一。
+PRIMARY KEY:主码约束，说明该列为基本表的主码。
+FOREIGN KEY:外码约束，说明表之间的参照关系。
+CHECK:域完整性约束，说明该列的取值需要满足的约束条件。
+DEFAULT:默认值设置，表示该列在未定义时的默认取值。*/
 
 --例3.3 也可为约束命名
 /*CREATE TABLE Customer(
@@ -23,7 +29,6 @@ custName varchar(20) NOT NULL constraint UQ_Customer UNIQUE,
 custCity varchar(10),
 custPHONE varchar(13))*/
 
-
 --例3.4 创建商品表Product.
 CREATE TABLE Product(
 pdID varchar(5) constraint PK_Product PRIMARY KEY,
@@ -31,8 +36,8 @@ pdName varchar(20) NOT NULL,
 pdSpec varchar(10),
 pdModel varchar(10),
 pdSupplier varchar(20) NOT NULL,
-pdPrice numeric(10,2) DEFAULT 0 CHECK (pdPrice>=0),pdStockSize int DEFAULT 0 CHECK (pdStockSize>=0) )
-
+pdPrice numeric(10,2) DEFAULT 0 CHECK (pdPrice>=0),
+pdStockSize int DEFAULT 0 CHECK (pdStockSize>=0))
 
 --例3.5 创建订单表Orders
 CREATE TABLE Orders(
@@ -44,20 +49,22 @@ ON DELETE cascade
 ON UPDATE cascade,
 orderAddress varchar(40) NOT NULL,
 orderAmount numeric(10,2) NOT NULL)
-
+/*外码除了级联CASCADE之外，还可以选择如下处理方式。
+NO ACTION:说明禁止删除或更新被参照记录，这也是默认的处理方式。
+SET NULL:说明将参照记录的对应属性列值设置为空值NULL。
+SET DEFAULT:说明将参照记录的对应属性列值设置为默认值。*/
 
 
 --例3.5 外码约束还可以定义成表级约束
 CREATE TABLE Orders(
-orderID varchar(16) PRIMARY KEY,
+orderID varchar( 16) PRIMARY KEY,
 orderDate date NOT NULL,
 custID varchar(5) NOT NULL,
 orderAddress varchar(40) NOT NULL,
-orderAmount numeric(10, 2) NOT NULL,
+orderAmount numeric(10,2) NOT NULL,
 FOREIGN KEY (custID) REFERENCES Customer(custID)
 ON DELETE cascade
 ON UPDATE cascade)
-
 
 --例3.6 创建订单明细表OrderDetail
 CREATE TABLE OrderDetail(
@@ -70,37 +77,32 @@ FOREIGN KEY (orderID) REFERENCES Orders (orderlD),
 FOREIGN KEY (pdID) REFERENCES Product (pdID)
 ON UPDATE cascade)
 
-
+--基本表的修改
 --例3.7 将Product表中的属性列pdName的数据类型改为varchar(30)
 ALTER TABLE Product
 ALTER COLUMN pdName varchar(30)
 --更改某些数据类型可能导致相关数据自动更改
-
 
 --例3.8 将Product表中的属性列pdName的数据类型改为varchar(2)
 ALTER TABLE Product
 ALTER COLUMN pdName varchar(2)
 --语句操作就会中止，原因在于“将截断字符串或二进制数据”
 
-
 --例3.9 在Product表中增加一个列:pdMemo(备注)，数据类型为varchar(100)
 ALTER TABLE Product
 ADD pdMemo varchar(100)
-
 
 --例3.10 在Customer表中增加默认值约束:custCity(所在城市)，其默认值为“北京”
 ALTER TABLE Customer
 ADD CONSTRAINT DF_custCity
 DEFAULT '北京' for custCity
 
-
 --例3.11 除Customert表中的完整性约束值RDF_custCity
 ALTER TABLE Customer
 DROP CONSTRAINT DF_custCity
 
-
-
---例3.12 基本表的删除，删除OrderDetail表
+--基本表的删除
+--例3.12 删除OrderDetail表
 DROP TABLE OrderDetail
 
 
@@ -180,9 +182,6 @@ SET pdID='11210'
 WHERE pdID='11205'
 --运行结果:操作失败
 --分析原因:违反了PRIMARY KEY约束
-
-
-
 
 
 
