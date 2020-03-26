@@ -1,3 +1,115 @@
+USE [master]
+GO
+
+/****** Object:  Database [作业]    Script Date: 2020/3/25 19:00:03 ******/
+CREATE DATABASE [作业]
+ CONTAINMENT = NONE
+ ON  PRIMARY 
+( NAME = N'作业', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL11.SQLEXPRESS\MSSQL\DATA\作业.mdf' , SIZE = 5120KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+ LOG ON 
+( NAME = N'作业_log', FILENAME = N'C:\Program Files\Microsoft SQL Server\MSSQL11.SQLEXPRESS\MSSQL\DATA\作业_log.ldf' , SIZE = 2048KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+GO
+
+ALTER DATABASE [作业] SET COMPATIBILITY_LEVEL = 110
+GO
+
+IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
+begin
+EXEC [作业].[dbo].[sp_fulltext_database] @action = 'enable'
+end
+GO
+
+ALTER DATABASE [作业] SET ANSI_NULL_DEFAULT OFF 
+GO
+
+ALTER DATABASE [作业] SET ANSI_NULLS OFF 
+GO
+
+ALTER DATABASE [作业] SET ANSI_PADDING OFF 
+GO
+
+ALTER DATABASE [作业] SET ANSI_WARNINGS OFF 
+GO
+
+ALTER DATABASE [作业] SET ARITHABORT OFF 
+GO
+
+ALTER DATABASE [作业] SET AUTO_CLOSE OFF 
+GO
+
+ALTER DATABASE [作业] SET AUTO_CREATE_STATISTICS ON 
+GO
+
+ALTER DATABASE [作业] SET AUTO_SHRINK OFF 
+GO
+
+ALTER DATABASE [作业] SET AUTO_UPDATE_STATISTICS ON 
+GO
+
+ALTER DATABASE [作业] SET CURSOR_CLOSE_ON_COMMIT OFF 
+GO
+
+ALTER DATABASE [作业] SET CURSOR_DEFAULT  GLOBAL 
+GO
+
+ALTER DATABASE [作业] SET CONCAT_NULL_YIELDS_NULL OFF 
+GO
+
+ALTER DATABASE [作业] SET NUMERIC_ROUNDABORT OFF 
+GO
+
+ALTER DATABASE [作业] SET QUOTED_IDENTIFIER OFF 
+GO
+
+ALTER DATABASE [作业] SET RECURSIVE_TRIGGERS OFF 
+GO
+
+ALTER DATABASE [作业] SET  DISABLE_BROKER 
+GO
+
+ALTER DATABASE [作业] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
+GO
+
+ALTER DATABASE [作业] SET DATE_CORRELATION_OPTIMIZATION OFF 
+GO
+
+ALTER DATABASE [作业] SET TRUSTWORTHY OFF 
+GO
+
+ALTER DATABASE [作业] SET ALLOW_SNAPSHOT_ISOLATION OFF 
+GO
+
+ALTER DATABASE [作业] SET PARAMETERIZATION SIMPLE 
+GO
+
+ALTER DATABASE [作业] SET READ_COMMITTED_SNAPSHOT OFF 
+GO
+
+ALTER DATABASE [作业] SET HONOR_BROKER_PRIORITY OFF 
+GO
+
+ALTER DATABASE [作业] SET RECOVERY SIMPLE 
+GO
+
+ALTER DATABASE [作业] SET  MULTI_USER 
+GO
+
+ALTER DATABASE [作业] SET PAGE_VERIFY CHECKSUM  
+GO
+
+ALTER DATABASE [作业] SET DB_CHAINING OFF 
+GO
+
+ALTER DATABASE [作业] SET FILESTREAM( NON_TRANSACTED_ACCESS = OFF ) 
+GO
+
+ALTER DATABASE [作业] SET TARGET_RECOVERY_TIME = 0 SECONDS 
+GO
+
+ALTER DATABASE [作业] SET  READ_WRITE 
+GO
+
+--数据库的定义
 --例3.1 定义一个SQL数据库
 CREATE DATABASE SaleProduct
 
@@ -6,6 +118,7 @@ CREATE DATABASE SaleProduct
 DROP DATABASE SaleProduct
 
 
+--基本表的定义、删除与修改
 --例3.3 创建客户表Customer
 CREATE TABLE Customer(
 custID varchar(5) PRIMARY KEY,
@@ -25,7 +138,9 @@ custPHONE varchar(13))*/
 --例3.4 创建商品表Product.
 CREATE TABLE Product(
 pdID varchar(5) constraint PK_Product PRIMARY KEY,
-pdName varchar(20) NOT NULL,pdSpec varchar(10),pdModel varchar(10),
+pdName varchar(20) NOT NULL,
+pdSpec varchar(10),
+pdModel varchar(10),
 pdSupplier varchar(20) NOT NULL,
 pdPrice numeric(10,2) DEFAULT 0 CHECK (pdPrice>=0),pdStockSize int DEFAULT 0 CHECK (pdStockSize>=0) )
 
@@ -42,6 +157,19 @@ orderAddress varchar(40) NOT NULL,
 orderAmount numeric(10,2) NOT NULL)
 
 
+
+--例3.5 外码约束还可以定义成表级约束
+CREATE TABLE Orders(
+orderID varchar(16) PRIMARY KEY,
+orderDate date NOT NULL,
+custID varchar(5) NOT NULL,
+orderAddress varchar(40) NOT NULL,
+orderAmount numeric(10, 2) NOT NULL,
+FOREIGN KEY (custID) REFERENCES Customer(custID)
+ON DELETE cascade
+ON UPDATE cascade)
+
+
 --例3.6 创建订单明细表OrderDetail
 CREATE TABLE OrderDetail(
 orderID varchar(16) NOT NULL,
@@ -52,3 +180,47 @@ PRIMARY KEY (orderID,pdID),
 FOREIGN KEY (orderID) REFERENCES Orders (orderlD),
 FOREIGN KEY (pdID) REFERENCES Product (pdID)
 ON UPDATE cascade)
+
+
+--例3.7 将Product表中的属性列pdName的数据类型改为varchar(30)
+ALTER TABLE Product
+ALTER COLUMN pdName varchar(30)
+--更改某些数据类型可能导致相关数据自动更改
+
+
+--例3.8 将Product表中的属性列pdName的数据类型改为varchar(2)
+ALTER TABLE Product
+ALTER COLUMN pdName varchar(2)
+--语句操作就会中止，原因在于“将截断字符串或二进制数据”
+
+
+--例3.9 在Product表中增加一个列:pdMemo(备注)，数据类型为varchar(100)
+ALTER TABLE Product
+ADD pdMemo varchar(100)
+
+
+--例3.10 在Customer表中增加默认值约束:custCity(所在城市)，其默认值为“北京”
+ALTER TABLE Customer
+ADD CONSTRAINT DF_custCity
+DEFAULT '北京' for custCity
+
+
+--例3.11 除Customert表中的完整性约束值RDF_custCity
+ALTER TABLE Customer
+DROP CONSTRAINT DF_custCity
+
+
+--例3.12 基本表的删除，删除OrderDetail表
+DROP TABLE OrderDetail
+
+
+
+
+
+
+
+
+
+
+
+
