@@ -99,9 +99,87 @@ ALTER TABLE Customer
 DROP CONSTRAINT DF_custCity
 
 
+
 --例3.12 基本表的删除，删除OrderDetail表
 DROP TABLE OrderDetail
 
+
+--例3.13 在Customer表的属性列custPhone上创建一个唯一索引
+CREATE UNIQUE INDEX idx_uq_custPhone
+on Customer(custPhone)
+
+
+--例3.14 删除Customert表的索引idx_uq_custPhone
+DROP INDEX idx_uq_custPhone ON Customer
+
+
+--例3.15 向客户表中插入一个客户记录('907','林巍','北京','17705678942')
+INSERT INTO Customer
+VALUES ('907','林巍','北京','17705678942')
+--说明:列名序列省略，则表示在VALUES后的元组值中提供插入元组的每个分量的值，分量的顺序和关系模式中列名的顺序一致。
+
+
+--例3.16 向客户表中插入一个客户记录('905','王力','大连','15903541236').
+INSERT INTO Customer
+VALUES ('905','王力','大连','15903541236')
+--运行结果:操作失败
+--分析原因:违反了PRIMARY KEY约束
+
+
+--例3.17 向客户表中插入一个客户记录,客户编号为“904”,客户名称为“张松林”
+INSERT INTO Customer(custID,custName)
+VALUES ('904','张松林')
+--运行结果:操作失败
+--分析原因:违反了UNIQUE约束
+
+--例3.18 在订单明细表OrderDetail中插入一个订单明细记录('D201 508201002006','11205', 47,2)
+--INSERT INTO OrderDetail
+--VALUES('D201508201002006','11205',47,2)
+--运行结果:操作失败
+--分析原因:违反了FOREIGN KEY约束
+
+--例3.19 删除Customer中客户名称为“张小宁”的客户的基本信息
+DELETE FROM Customer
+WHERE custName= '张小宁'
+
+
+--例3.20 删除Product中商品编号为“11206” 的商品信息
+DELETE FROM Product
+WHERE pdID='11206'
+--运行结果:操作失败
+--违反参照引用关系
+
+--例3.21 将客户名称为“里奇”的所在城市改为“深圳”
+UPDATE Customer
+SET custCity ='深圳'
+WHERE custName='里奇'
+
+--例3.22 将商品表中所有商品的价格调高10%
+UPDATE Product
+SET pdPrice=pdPrice*1.1
+
+
+--例3.23 将客户表中客户编号为“902”的客户编号改为“910”
+UPDATE Customer
+SET custID='910'
+WHERE custID='902'
+--运行结果: Customer中客户 编号为“902” 的客户编号成功改为“910”。
+--同时订单表Orders中所有引用“902”的元组的custID也同时更新为“910”。
+
+
+--例3.24 将订单表中订单编号为“D201007010916005”的订单编号改为“D201007010916009”。
+UPDATE Orders
+SET orderID = 'D201007010916009'
+WHERE orderID = 'D201007010916005'
+--运行结果:操作失败
+--分析原因:违反参照引用关系
+
+--例3.25 将商品表中商品编号为“11205”的商品编号改为“11210”
+UPDATE Product
+SET pdID='11210'
+WHERE pdID='11205'
+--运行结果:操作失败
+--分析原因:违反了PRIMARY KEY约束
 
 
 
