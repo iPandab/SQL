@@ -1,0 +1,54 @@
+--例3.1 定义一个SQL数据库
+CREATE DATABASE SaleProduct
+
+
+--例3.2 删除SQL数据库SaleProduct
+DROP DATABASE SaleProduct
+
+
+--例3.3 创建客户表Customer
+CREATE TABLE Customer(
+custID varchar(5) PRIMARY KEY,
+custName varchar(20) NOT NULL UNIQUE,
+custCity varchar(10),
+custPhone varchar(13))
+
+
+--例3.3 也可为约束命名
+/*CREATE TABLE Customer(
+custID varchar(5) constraint PK_Customer PRIMARY KEY,
+custName varchar(20) NOT NULL constraint UQ_Customer UNIQUE,
+custCity varchar(10),
+custPHONE varchar(13))*/
+
+
+--例3.4 创建商品表Product.
+CREATE TABLE Product(
+pdID varchar(5) constraint PK_Product PRIMARY KEY,
+pdName varchar(20) NOT NULL,pdSpec varchar(10),pdModel varchar(10),
+pdSupplier varchar(20) NOT NULL,
+pdPrice numeric(10,2) DEFAULT 0 CHECK (pdPrice>=0),pdStockSize int DEFAULT 0 CHECK (pdStockSize>=0) )
+
+
+--例3.5 创建订单表Orders
+CREATE TABLE Orders(
+orderID varchar(16) PRIMARY KEY,
+orderDate date NOT NULL,
+custID varchar(5) NOT NULL
+FOREIGN KEY REFERENCES Customer(custID)
+ON DELETE cascade
+ON UPDATE cascade,
+orderAddress varchar(40) NOT NULL,
+orderAmount numeric(10,2) NOT NULL)
+
+
+--例3.6 创建订单明细表OrderDetail
+CREATE TABLE OrderDetail(
+orderID varchar(16) NOT NULL,
+pdID varchar(5) NOT NULL,
+pdSellPrice numeric(10, 2) NOT NULL,
+quantity int NOT NULL,
+PRIMARY KEY (orderID,pdID),
+FOREIGN KEY (orderID) REFERENCES Orders (orderlD),
+FOREIGN KEY (pdID) REFERENCES Product (pdID)
+ON UPDATE cascade)
