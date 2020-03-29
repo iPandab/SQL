@@ -382,7 +382,7 @@ SELECT DISTINCT orderID
 FROM OrderDetail
 WHERE pdID IN ('11203', '11206');
 
---例4.21查询“上海双喜”生产的价格在100元以上的商品信息。
+--例4.21 查询“上海双喜”生产的价格在100元以上的商品信息。
 SELECT *
 FROM Product
 WHERE pdSupplier='上海双喜'
