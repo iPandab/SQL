@@ -7,7 +7,6 @@ CREATE DATABASE SaleProduct
 --例3.2 删除SQL数据库SaleProduct
 --DROP DATABASE SaleProduct
 
-
 --基本表的定义、删除与修改
 --基本表的定义
 --例3.3 创建客户表Customer
@@ -46,7 +45,8 @@ CREATE TABLE Orders(
 orderID varchar(16) PRIMARY KEY,
 orderDate date NOT NULL,
 custID varchar(5) NOT NULL
-FOREIGN KEY REFERENCES Customer(custID)
+FOREIGN KEY REFERENCES 
+Customer(custID)
 ON DELETE cascade
 ON UPDATE cascade,
 orderAddress varchar(40) NOT NULL,
@@ -117,6 +117,56 @@ DROP INDEX idx_uq_custPhone ON Customer
 INSERT INTO Customer
 VALUES ('907','林巍','北京','17705678942')
 --说明:列名序列省略，则表示在VALUES后的元组值中提供插入元组的每个分量的值，分量的顺序和关系模式中列名的顺序一致。
+
+
+
+
+INSERT INTO Customer
+VALUES ('901','里奇','北京','13844472365')
+INSERT INTO Customer
+VALUES('902','环宇','北京','18955532012')
+INSERT INTO Customer
+VALUES('903','张松林','上海','13677712316')
+INSERT INTO Customer
+VALUES('905','贾立委','广州','15985612316')
+INSERT INTO Customer
+VALUES('906','张小宁','','')
+
+INSERT INTO Product
+VALUES('11203','羽毛球','10只装','YM-11','上海双喜','20.00','500')
+INSERT INTO Orders
+VALUES('11205','羽毛球','','','','','')
+INSERT INTO Orders
+VALUES('11206','篮球','','','','','')
+INSERT INTO Orders
+VALUES('11207','篮球','','','','','')
+INSERT INTO Orders
+VALUES('11208','篮球','','','','','')
+INSERT INTO Orders
+VALUES('11209','足球','','','','','')
+INSERT INTO Orders
+VALUES('11210','足球','','','','','')
+INSERT INTO Orders
+VALUES('11201','羽毛球拍','','','','','')
+INSERT INTO Orders
+VALUES('11202','羽毛球拍','','','','','')
+
+
+
+
+INSERT INTO Orders
+VALUES('D01005161628001','2010-05-16','901','北京市朝阳区英雄联盟小区9号楼','6750.00')
+INSERT INTO Orders
+VALUES('D201005171630002','2010-05-17','903','上海市虹梅路201号','1232.00')
+INSERT INTO Orders
+VALUES('D201006060923003','2010-06-06','905','广州市江南大道中82号','2500.00')
+INSERT INTO Orders
+VALUES('D201006101528004','2010-06-10','901','北京市海淀区光华路55号','6200.00')
+INSERT INTO Orders
+VALUES('D201007010916005','2010-07-01','902','北京市北四环中路35号','1425.00')
+
+
+
 
 --例3.16 向客户表中插入一个客户记录('905','王力','大连','15903541236').
 --INSERT INTO Customer
