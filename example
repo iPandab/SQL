@@ -330,9 +330,19 @@ SELECT *
 FROM Customer
 WHERE custCity NOT IN ('北京','广州')
 
---例4-16 查询所有客户所在城市。
+--例4-15 查询所有客户所在城市。
 --不带DISTINCT的语句:
 SELECT custCity FROM Customer
 --带DISTINCT的语句:
 SELECT DISTINCT custCity FROM  Customer
 --DISTINCT短语的作用范围是所有目标列，在SELECT子句中只出现一次。
+
+--例4.16 查询所有北京客户的客户编号、客户名称和客户电话，并将其存入新基本表BJ_Customer中。
+SELECT custID,custName,custPhone
+INTO BJ_Customer
+FROM Customer;
+
+--例4.17 查询所有商品的基本信息，并首先按照生产厂商升序排列，同一个生产厂商的商品按照价格降序排列。
+SELECT *
+FROM Product
+ORDER BY pdSupplier, pdPrice DESC;
