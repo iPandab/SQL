@@ -179,52 +179,31 @@ WHERE pdID='11205'
 
 ！！！！！！
 例4.1 查询所有客户的基本情况
-
 SELECT custID,custName,custCity,custPhoneFROM Customer
-
 或者
-
 SELECT *
-
 FROM Customer
-
 说明:*是一种缺省形式，当所查询的列是关系的所有属性时，可以使用*来表示。
 
 例4.2 查询北京客户的客户编号和客户名称
-
 SELECT custID,custNameFROM Customer
-
 WHERE custCity=' 北京'
-
 例4.3 查询订单总金额超过5000元的订单信息
-
 SELECT *
-
 FROM Orders
-
 WH ERE orderA mount>5000
 
 例4.4 查询价格在100-500 (包含100和500)之间的商品编号
-
 SELECT pdIDFROM Product
-
 WHERE pdPrice BETWEEN 100 AND 500
-
 相当于
-
 SELECT pdIDFROM Product
-
 WHERE pdPrice >= 100 AND pdPrice <= 500
 
 例4.5 查询价格不在100-500之间的商品编号
-
 SELECT pdIDFROM Product
-
 WHERE pdPrice NOT BETWEEN 100 AND 500
-
 相当于
-
 SELECT pdIDFROM Product
-
 WHERE pdPrice <100 AND pdPrice > 500
 
