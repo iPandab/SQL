@@ -5,7 +5,7 @@ CREATE DATABASE SaleProduct
 
 --数据库的删除
 --例3.2 删除SQL数据库SaleProduct
-DROP DATABASE SaleProduct
+--DROP DATABASE SaleProduct
 
 
 --基本表的定义、删除与修改
@@ -104,7 +104,7 @@ DROP CONSTRAINT DF_custCity
 
 --基本表的删除
 --例3.12 删除OrderDetail表
-DROP TABLE OrderDetail
+--DROP TABLE OrderDetail
 
 --例3.13 在Customer表的属性列custPhone上创建一个唯一索引
 CREATE UNIQUE INDEX idx_uq_custPhone
