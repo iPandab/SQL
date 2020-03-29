@@ -74,7 +74,7 @@ pdID varchar(5) NOT NULL,
 pdSellPrice numeric(10, 2) NOT NULL,
 quantity int NOT NULL,
 PRIMARY KEY (orderID,pdID),
-FOREIGN KEY (orderID) REFERENCES Orders (orderlD),
+FOREIGN KEY (orderID) REFERENCES Orders (orderID),
 FOREIGN KEY (pdID) REFERENCES Product (pdID)
 ON UPDATE cascade)
 
