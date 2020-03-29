@@ -158,8 +158,11 @@ ALTER COLUMN pdName varchar(2)
 --语句操作就会中止，原因在于“将截断字符串或二进制数据”
 
 --例3.9 在Product表中增加一个列:pdMemo(备注)，数据类型为varchar(100)
-ALTER TABLE Product
+/*ALTER TABLE Product
 ADD pdMemo varchar(100)
+删除该列
+ALTER TABLE Product
+DROP column pdMemo*/
 
 --例3.10 在Customer表中增加默认值约束:custCity(所在城市)，其默认值为“北京”
 ALTER TABLE Customer
