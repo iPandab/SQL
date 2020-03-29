@@ -178,8 +178,8 @@ WHERE pdID='11205'
 
 --简单无条件查询
 --例4.1 查询所有客户的基本情况
---SELECT custID,custName,custCity,custPhone
---FROM Customer
+SELECT custID,custName,custCity,custPhone
+FROM Customer
 --或者
 SELECT *
 FROM Customer
@@ -188,7 +188,7 @@ FROM Customer
 --简单条件查询
 --例4.2 查询北京客户的客户编号和客户名称
 SELECT 'custID','custName' FROM Customer
-WHERE custCity=' 北京'
+WHERE custCity='北京'
 
 --例4.3 查询订单总金额超过5000元的订单信息
 SELECT *
@@ -210,4 +210,55 @@ WHERE pdPrice NOT BETWEEN 100 AND 500
 SELECT pdID FROM Product
 WHERE pdPrice <100 AND pdPrice > 500
 
+--例4.6 查询客户“里奇”的联系电话。
+SELECT custPhone FROM Customer
+WHERE custName LIKE '里奇'
+--等价于：
+/*SELECT custPhone 
+FROM Customer
+WHERE custName='里奇'*/
+--当‘<字符串常数>’不含有通配符时，可以用=运算符取代LIKE谓词,用!=或<>运算符取代NOT LIKE谓词。
+
+--例4.7 查询所有姓张的客户的基本情况
+SELECT *
+FROM Customer
+WHERE custName LIKE '张%'
+
+--例4.8 查询客户名称第2个字为“立”的客户的基本情况。
+SELECT *
+FROM Customer
+WHERE custName LIKE '立%'
+
+--例4.9 查询所有不姓贾的客户的基本情况。
+SELECT *
+FROM Customer
+WHERE custName NOT LIKE '贾%'
+
+--例4.10 查询所有客户名称以“张”开头的客户的基本情况。
+-- 当用户要查询的字符串本身就含有%或_时，要使用ESCAPE'<转义字符>'短语对通配符进行转义。
+SELECT *
+FROM Customer
+WHERE custName LIKE '张\_%' ESCAPE '\'
+
+--空值查询
+--例4.11 查询缺少联系电话的客户名单
+SELECT custName FROM Customer
+WHERE custPhone IS NULL
+--例4.12 查询所有有联系电话的客户名单。
+SELECT custName FROM Customer
+WHERE custPhone IS NOT NULL
+
+--例4.13 查询北京和广州的客户的基本情况。
+SELECT *
+FROM Customer
+WHERE custCity IN ('北京','广州')
+--等价于:
+SELECT*
+FROM Customer
+WHERE custCity ='北京' OR custCity='广州'
+
+--例4.14 查询除了北京和广州之外，其余城市的客户的基本情况。
+SELECT *
+FROM Customer
+WHERE custCity NOT IN ('北京','广州')
 
