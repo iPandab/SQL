@@ -349,3 +349,48 @@ FROM Customer;
 SELECT *
 FROM Product
 ORDER BY pdSupplier, pdPrice DESC;
+
+--例4.18 查询所有商品中库存数量最少的两种商品的基本信息。
+SELECT TOP 2 *
+FROM Product
+ORDER BY pdStockSize;
+--如果使用WITH TIES，即语句为：
+SELECT TOP 2 WITH TIES *
+FROM Product
+ORDER BY pdStockSize;
+
+--集合运算
+--例4.19 查询北京和上海的客户的基本信息。
+SELECT *
+FROM Customer
+WHERE custCity='北京'
+UNION
+SELECT *
+FROM Customer
+WHERE custCity='上海';
+
+--例4.20 查询包含了编号为“11203”的商品或编号为“11206”的商品的订单编号。
+SELECT orderID
+FROM OrderDetail
+WHERE pdID='11203'
+UNION
+SELECT orderID
+FROM OrderDetail
+WHERE pdID='11206';
+--等价于：
+SELECT DISTINCT orderID
+FROM OrderDetail
+WHERE pdID IN ('11203', '11206');
+
+--例4.21查询“上海双喜”生产的价格在100元以上的商品信息。
+SELECT *
+FROM Product
+WHERE pdSupplier='上海双喜'
+INTERSECT
+SELECT *
+FROM Product
+WHERE pdPrice>100;
+--等价于：
+SELECT *
+FROM Product
+WHERE pdSupplier='上海双喜' AND pdPrice>100;
