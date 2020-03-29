@@ -23,6 +23,17 @@ FOREIGN KEY:外码约束，说明表之间的参照关系。
 CHECK:域完整性约束，说明该列的取值需要满足的约束条件。
 DEFAULT:默认值设置，表示该列在未定义时的默认取值。*/
 
+INSERT INTO Orders
+VALUES('D01005161628001','2010-05-16','901','北京市朝阳区英雄联盟小区9号楼','6750.00')
+INSERT INTO Orders
+VALUES('D201005171630002','2010-05-17','903','上海市虹梅路201号','1232.00')
+INSERT INTO Orders
+VALUES('D201006060923003','2010-06-06','905','广州市江南大道中82号','2500.00')
+INSERT INTO Orders
+VALUES('D201006101528004','2010-06-10','901','北京市海淀区光华路55号','6200.00')
+INSERT INTO Orders
+VALUES('D201007010916005','2010-07-01','902','北京市北四环中路35号','1425.00')
+
 --例3.3 也可为约束命名
 /*CREATE TABLE Customer(
 custID varchar(5) constraint PK_Customer PRIMARY KEY,
@@ -40,6 +51,25 @@ pdSupplier varchar(20) NOT NULL,
 pdPrice numeric(10,2) DEFAULT 0 CHECK (pdPrice>=0),
 pdStockSize int DEFAULT 0 CHECK (pdStockSize>=0))
 
+INSERT INTO Product
+VALUES('11203','羽毛球','10只装','YM-11','上海双喜','20.00','500')
+INSERT INTO Product
+VALUES('11205','羽毛球','6只装','YM-11','天津男神','15.00','47')
+INSERT INTO Product
+VALUES('11206','篮球','70-71cm','74-492y','上海斯伯丁','130.00','20')
+INSERT INTO Product
+VALUES('11207','篮球','75-76cm','TB-49x','上海双喜','125.00','15')
+INSERT INTO Product
+VALUES('11208','篮球','75-76cm','74-SL','天津男神','70.00','15')
+INSERT INTO Product
+VALUES('11209','足球','Size5','TF-88x','上海双喜','120.00','10')
+INSERT INTO Product
+VALUES('11210','足球','Size5','32-SZ','天津男神','160.00','60')
+INSERT INTO Product
+VALUES('11201','羽毛球拍','单只装','YP-11','北京胜利','400.00','30')
+INSERT INTO Product
+VALUES('11202','羽毛球拍','2只装','UP-129','上海双喜','360.00','29')
+
 --例3.5 创建订单表Orders
 CREATE TABLE Orders(
 orderID varchar(16) PRIMARY KEY,
@@ -55,6 +85,17 @@ orderAmount numeric(10,2) NOT NULL)
 NO ACTION:说明禁止删除或更新被参照记录，这也是默认的处理方式。
 SET NULL:说明将参照记录的对应属性列值设置为空值NULL。
 SET DEFAULT:说明将参照记录的对应属性列值设置为默认值。*/
+
+INSERT INTO Customer
+VALUES ('901','里奇','北京','13844472365')
+INSERT INTO Customer
+VALUES('902','环宇','北京','18955532012')
+INSERT INTO Customer
+VALUES('903','张松林','上海','13677712316')
+INSERT INTO Customer
+VALUES('905','贾立委','广州','15985612316')
+INSERT INTO Customer
+VALUES('906','张小宁','','')
 
 --例3.5 外码约束还可以定义成表级约束
 CREATE TABLE Orders(
@@ -78,6 +119,32 @@ FOREIGN KEY (orderID) REFERENCES Orders(orderID),
 FOREIGN KEY (pdID) REFERENCES Product(pdID)
 ON UPDATE cascade)
 
+INSERT INTO OrderDetail
+VALUES('D201005161628001','11203','20.00','40')
+INSERT INTO OrderDetail
+VALUES('D201005161628001','11206','130.00','15')
+INSERT INTO OrderDetail
+VALUES('D201005161628001','11201','400.00','10')
+INSERT INTO OrderDetail
+VALUES('D201005161628002','11203','16.00','5')
+INSERT INTO OrderDetail
+VALUES('D201005161628002','11202','288.00','4')
+INSERT INTO OrderDetail
+VALUES('D201005161628003','11206','130.00','10')
+INSERT INTO OrderDetail
+VALUES('D201005161628003','11209','120.00','10')
+INSERT INTO OrderDetail
+VALUES('D201005161628004','11205','15.00','20')
+INSERT INTO OrderDetail
+VALUES('D201005161628004','11208','70.00','10')
+INSERT INTO OrderDetail
+VALUES('D201005161628004','11210','160.00','10')
+INSERT INTO OrderDetail
+VALUES('D201005161628004','12202','360.00','10')
+INSERT INTO OrderDetail
+VALUES('D201005161628005','11207','125.00','5')
+INSERT INTO OrderDetail
+VALUES('D201005161628005','11210','160.00','5')
 
 --基本表的修改
 --例3.7 将Product表中的属性列pdName的数据类型改为varchar(30)
@@ -118,83 +185,6 @@ DROP INDEX idx_uq_custPhone ON Customer
 INSERT INTO Customer
 VALUES ('907','林巍','北京','17705678942')
 --说明:列名序列省略，则表示在VALUES后的元组值中提供插入元组的每个分量的值，分量的顺序和关系模式中列名的顺序一致。
-
-
-
-
-INSERT INTO Customer
-VALUES ('901','里奇','北京','13844472365')
-INSERT INTO Customer
-VALUES('902','环宇','北京','18955532012')
-INSERT INTO Customer
-VALUES('903','张松林','上海','13677712316')
-INSERT INTO Customer
-VALUES('905','贾立委','广州','15985612316')
-INSERT INTO Customer
-VALUES('906','张小宁','','')
-
-INSERT INTO OrderDetail
-VALUES('D201005161628001','11203','20.00','40')
-INSERT INTO OrderDetail
-VALUES('D201005161628001','11206','130.00','15')
-INSERT INTO OrderDetail
-VALUES('D201005161628001','11201','400.00','10')
-INSERT INTO OrderDetail
-VALUES('D201005161628002','11203','16.00','5')
-INSERT INTO OrderDetail
-VALUES('D201005161628002','11202','288.00','4')
-INSERT INTO OrderDetail
-VALUES('D201005161628003','11206','130.00','10')
-INSERT INTO OrderDetail
-VALUES('D201005161628003','11209','120.00','10')
-INSERT INTO OrderDetail
-VALUES('D201005161628004','11205','15.00','20')
-INSERT INTO OrderDetail
-VALUES('D201005161628004','11208','70.00','10')
-INSERT INTO OrderDetail
-VALUES('D201005161628004','11210','160.00','10')
-INSERT INTO OrderDetail
-VALUES('D201005161628004','12202','360.00','10')
-INSERT INTO OrderDetail
-VALUES('D201005161628005','11207','125.00','5')
-INSERT INTO OrderDetail
-VALUES('D201005161628005','11210','160.00','5')
-
-INSERT INTO Product
-VALUES('11203','羽毛球','10只装','YM-11','上海双喜','20.00','500')
-INSERT INTO Product
-VALUES('11205','羽毛球','6只装','YM-11','天津男神','15.00','47')
-INSERT INTO Product
-VALUES('11206','篮球','70-71cm','74-492y','上海斯伯丁','130.00','20')
-INSERT INTO Product
-VALUES('11207','篮球','75-76cm','TB-49x','上海双喜','125.00','15')
-INSERT INTO Product
-VALUES('11208','篮球','75-76cm','74-SL','天津男神','70.00','15')
-INSERT INTO Product
-VALUES('11209','足球','Size5','TF-88x','上海双喜','120.00','10')
-INSERT INTO Product
-VALUES('11210','足球','Size5','32-SZ','天津男神','160.00','60')
-INSERT INTO Product
-VALUES('11201','羽毛球拍','单只装','YP-11','北京胜利','400.00','30')
-INSERT INTO Product
-VALUES('11202','羽毛球拍','2只装','UP-129','上海双喜','360.00','29')
-
-
-
-
-INSERT INTO Orders
-VALUES('D01005161628001','2010-05-16','901','北京市朝阳区英雄联盟小区9号楼','6750.00')
-INSERT INTO Orders
-VALUES('D201005171630002','2010-05-17','903','上海市虹梅路201号','1232.00')
-INSERT INTO Orders
-VALUES('D201006060923003','2010-06-06','905','广州市江南大道中82号','2500.00')
-INSERT INTO Orders
-VALUES('D201006101528004','2010-06-10','901','北京市海淀区光华路55号','6200.00')
-INSERT INTO Orders
-VALUES('D201007010916005','2010-07-01','902','北京市北四环中路35号','1425.00')
-
-
-
 
 --例3.16 向客户表中插入一个客户记录('905','王力','大连','15903541236').
 --INSERT INTO Customer
