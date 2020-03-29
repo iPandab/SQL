@@ -74,9 +74,10 @@ pdID varchar(5) NOT NULL,
 pdSellPrice numeric(10, 2) NOT NULL,
 quantity int NOT NULL,
 PRIMARY KEY (orderID,pdID),
-FOREIGN KEY (orderID) REFERENCES Orders (orderID),
-FOREIGN KEY (pdID) REFERENCES Product (pdID)
+FOREIGN KEY (orderID) REFERENCES Orders(orderID),
+FOREIGN KEY (pdID) REFERENCES Product(pdID)
 ON UPDATE cascade)
+
 
 --基本表的修改
 --例3.7 将Product表中的属性列pdName的数据类型改为varchar(30)
